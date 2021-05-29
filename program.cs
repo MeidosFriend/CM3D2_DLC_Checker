@@ -113,10 +113,10 @@ namespace CM3D2_DLC_Checker
 
         }
 
-        static string GET_COM3D2_INSTALLPATH()
+        static string GET_CM3D2_INSTALLPATH()
         {
-            // Default: Current Directory of COM3D2_DLC_Checker
-            // Will replaced by COM3D2 InstallPath Registry
+            // Default: Current Directory of CM3D2_DLC_Checker
+            // Will replaced by CM3D2 InstallPath Registry
             const string keyName = "HKEY_CURRENT_USER" + "\\" + "SOFTWARE\\KISS\\カスタムメイド3D2";
 
             string GAME_DIRECTORY_REGISTRY = (string)Registry.GetValue(keyName,"InstallPath","");
@@ -134,7 +134,7 @@ namespace CM3D2_DLC_Checker
 
         static List<string> READ_GAMEDATA()
         {
-            string GAME_DIRECTORY = GET_COM3D2_INSTALLPATH();
+            string GAME_DIRECTORY = GET_CM3D2_INSTALLPATH();
             string GAMEDATA_DIRECTORY = GAME_DIRECTORY + "\\GameData";
             
             List<string> GAMEDATA_LIST = new List<string>();
