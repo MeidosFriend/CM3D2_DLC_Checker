@@ -117,7 +117,7 @@ namespace CM3D2_DLC_Checker
         {
             // Default: Current Directory of COM3D2_DLC_Checker
             // Will replaced by COM3D2 InstallPath Registry
-            const string keyName = "HKEY_CURRENT_USER" + "\\" + "SOFTWARE\\KISS\\カスタムオーダーメイド3D2";
+            const string keyName = "HKEY_CURRENT_USER" + "\\" + "SOFTWARE\\KISS\\カスタムメイド3D2";
 
             string GAME_DIRECTORY_REGISTRY = (string)Registry.GetValue(keyName,"InstallPath","");
 

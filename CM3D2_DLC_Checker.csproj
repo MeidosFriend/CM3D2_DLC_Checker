@@ -3,21 +3,17 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <ApplicationIcon>lc_1_z07_icon.ico</ApplicationIcon>
+    <ApplicationIcon>cm3d2.ico</ApplicationIcon>
     <Authors>MeidosFriend</Authors>
     <PackageProjectUrl></PackageProjectUrl>
-    <RepositoryUrl>https://github.com/MeidosFriend/COM3D2_EN_DLC_Checker</RepositoryUrl>
+    <RepositoryUrl>https://github.com/MeidosFriend/CM3D2_DLC_Checker</RepositoryUrl>
     <SignAssembly>false</SignAssembly>
     <StartupObject></StartupObject>
     <AssemblyName>CM3D2_DLC_Checker</AssemblyName>
     <RootNamespace>CM3D2_DLC_Checker</RootNamespace>
     <Description>Developed on Base of Tankerch's Release</Description>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="CM3D2_DLC_Checker.py" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.7.0" />
   </ItemGroup>
