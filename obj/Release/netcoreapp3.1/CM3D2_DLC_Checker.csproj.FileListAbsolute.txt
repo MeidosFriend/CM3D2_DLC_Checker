@@ -1,0 +1,13 @@
+L:\GitHub_Repository\CM3D2_DLC_Checker\obj\Release\netcoreapp3.1\CM3D2_DLC_Checker.csproj.AssemblyReference.cache
+L:\GitHub_Repository\CM3D2_DLC_Checker\obj\Release\netcoreapp3.1\CM3D2_DLC_Checker.AssemblyInfoInputs.cache
+L:\GitHub_Repository\CM3D2_DLC_Checker\obj\Release\netcoreapp3.1\CM3D2_DLC_Checker.AssemblyInfo.cs
+L:\GitHub_Repository\CM3D2_DLC_Checker\obj\Release\netcoreapp3.1\CM3D2_DLC_Checker.csproj.CoreCompileInputs.cache
+L:\GitHub_Repository\CM3D2_DLC_Checker\bin\Release\netcoreapp3.1\CM3D2_DLC_Checker.exe
+L:\GitHub_Repository\CM3D2_DLC_Checker\bin\Release\netcoreapp3.1\CM3D2_DLC_Checker.deps.json
+L:\GitHub_Repository\CM3D2_DLC_Checker\bin\Release\netcoreapp3.1\CM3D2_DLC_Checker.runtimeconfig.json
+L:\GitHub_Repository\CM3D2_DLC_Checker\bin\Release\netcoreapp3.1\CM3D2_DLC_Checker.runtimeconfig.dev.json
+L:\GitHub_Repository\CM3D2_DLC_Checker\bin\Release\netcoreapp3.1\CM3D2_DLC_Checker.dll
+L:\GitHub_Repository\CM3D2_DLC_Checker\bin\Release\netcoreapp3.1\CM3D2_DLC_Checker.pdb
+L:\GitHub_Repository\CM3D2_DLC_Checker\obj\Release\netcoreapp3.1\CM3D2_DLC_Checker.dll
+L:\GitHub_Repository\CM3D2_DLC_Checker\obj\Release\netcoreapp3.1\CM3D2_DLC_Checker.pdb
+L:\GitHub_Repository\CM3D2_DLC_Checker\obj\Release\netcoreapp3.1\CM3D2_DLC_Checker.genruntimeconfig.cache
