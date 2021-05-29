@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CM3D2": {
+      "commandName": "Executable",
+      "executablePath": "L:\\GitHub_Repository\\CM3D2_DLC_Checker\\bin\\Debug\\netcoreapp3.1\\CM3D2_DLC_Checker.exe"
+    }
+  }
+}
