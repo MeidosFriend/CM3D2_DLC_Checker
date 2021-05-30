@@ -8,38 +8,92 @@ using Microsoft.Win32;
 
 namespace CM3D2_DLC_Checker
 {
-
+    
     class Program
     {
-
-        // Variabels
+        
+        // Variables
+        static readonly string GAME_NAME = "CM3D2";
+        static readonly string INI_FILE = GAME_NAME + "_DLC_Checker.ini";
+        static readonly string MY_DLC_LST_FILE = "MY_CM_NewListDLC.lst";
+        static readonly string GAME_HEADER = "            CM3D2_DLC_Checker   |     Github.com/MeidosFriend/CM3D2_DLC_Checker";
         static readonly string DLC_URL = "https://raw.githubusercontent.com/MeidosFriend/CM3D2_DLC_Checker/master/CM_NewListDLC.lst";
-        static readonly string DLC_LIST_PATH = Path.Combine(Directory.GetCurrentDirectory(), "CM_NewListDLC.lst");
+        
+        static readonly string DLC_LST_FILE = "CM_NewListDLC.lst";
+        static string DLC_LIST_PATH = Path.Combine(Directory.GetCurrentDirectory(), DLC_LST_FILE);
+        
+        // ini File default
+        static string UseCurrentDir = "No";
+        static string UpdateListFile = "Yes";
+        static string MyDLCListFile = "No";
 
+        const string GAME_REGISTRY = "SOFTWARE\\KISS\\カスタムメイド3D2";
         static void Main(string[] args)
         {
+            // Initialize ini File
+            GetIniFile(ref UseCurrentDir, ref UpdateListFile, ref MyDLCListFile);
+
+            // Write Header Lines to Console
             PRINT_HEADER();
 
-            // HTTP_RESOPOND
-            //  - Item1 = HTTP Status Code
-            //  - Item2 = Internet DLC List content
-            Tuple<HttpStatusCode, string> HTTP_RESPOND = CONNECT_TO_INTERNET(DLC_URL);
-
-            if (HTTP_RESPOND.Item1 == HttpStatusCode.OK)
+            // Custom Listfile
+            if (MyDLCListFile == "Yes")
             {
-                Console.WriteLine("Connected to {0}", DLC_URL);
-                UPDATE_DLC_LIST(HTTP_RESPOND.Item2);
+                DLC_LIST_PATH = Path.Combine(Directory.GetCurrentDirectory(), MY_DLC_LST_FILE);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Using Custom Listfile {0}", MY_DLC_LST_FILE);
+            }
+            // Standard Listfile
+            else
+            {
+                // Loading new ListFile from Internet or use Local File
+                if (UpdateListFile == "Yes")
+                {
+                    // HTTP_RESOPOND
+                    //  - Item1 = HTTP Status Code
+                    //  - Item2 = Internet DLC List content
+                    Tuple<HttpStatusCode, string> HTTP_RESPOND = CONNECT_TO_INTERNET(DLC_URL);
+                    // Internet Connection OK
+                    if (HTTP_RESPOND.Item1 == HttpStatusCode.OK)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine("Connected to {0}", DLC_URL);
+                        //Console.WriteLine("Hint: You can preserve your current {0} by disable autoupdate in {1} with: UpdateListFile=No", DLC_LST_FILE, INI_FILE);
+                        UPDATE_DLC_LIST(HTTP_RESPOND.Item2);
+                    }
+                    // Internet Connection NOK
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("Can't connect to internet, offline file will be used");
+                    }
+                }
+                // Autoupdate disabled
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Updating {0} disabled", DLC_LST_FILE);
+                    //Console.ForegroundColor = ConsoleColor.Cyan;
+                    //Console.WriteLine("Hint: You can enable autoupdate in {0} with: UpdateListFile=Yes", INI_FILE);
+                }
+            }
+
+            // Print Game Directory
+            if (UseCurrentDir=="No")
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                //Console.WriteLine("Game Dir: " + GET_GAME_INSTALLPATH());
             }
             else
             {
-                Console.WriteLine("Can't connect to internet, offline file will be used");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                //Console.WriteLine("Game Dir: " + GET_GAME_INSTALLPATH());
             }
+            //Console.WriteLine("Game Dir: " + GET_GAME_INSTALLPATH());
 
             // DLC LIST = [DLC_FILENAME, DLC_NAME]
             IDictionary<string, string> DLC_LIST = READ_DLC_LIST();
             List<string> GAMEDATA_LIST = READ_GAMEDATA();
-
-            Console.WriteLine(GET_CM3D2_INSTALLPATH());
 
             // DLC LIST SORTED
             // Item 1 = INSTALLED_DLC
@@ -51,10 +105,36 @@ namespace CM3D2_DLC_Checker
             EXIT_PROGRAM();
         }
 
+	static void GetIniFile(ref string UseCurrentDir, ref string UpdateListFile, ref string MyDLCListFile)
+	{
+		// Creates or loads an INI file in the same directory as your executable
+        // named EXE.ini (where EXE is the name of your executable)
+		// Key, {Value}, Section            	
+
+		var MyIni = new IniFile();
+        if (!MyIni.KeyExists("UseCurrentDir", "GameDirectory"))
+        {
+           	MyIni.Write("UseCurrentDir", "No", "GameDirectory");
+        }
+		UseCurrentDir = MyIni.Read("UseCurrentDir","GameDirectory");
+
+        if (!MyIni.KeyExists("UpdateListFile", "DLCListFile"))
+        {
+            MyIni.Write("UpdateListFile", "Yes", "DLCListFile");
+        }
+        UpdateListFile = MyIni.Read("UpdateListFile", "DLCListFile");
+
+        if (!MyIni.KeyExists("MyDLCListFile", "DLCListFile"))
+        {
+            MyIni.Write("MyDLCListFile", "No", "DLCListFile");
+        }
+        MyDLCListFile = MyIni.Read("MyDLCListFile", "DLCListFile");
+    }
+
         static void PRINT_HEADER()
         {
             CONSOLE_COLOR(ConsoleColor.Green, "===========================================================================================");
-            CONSOLE_COLOR(ConsoleColor.Green, "         CM3D2_DLC_Checker   |   Github.com/MeidosFriend/CM3D2_DLC_Checker");
+            CONSOLE_COLOR(ConsoleColor.Green, GAME_HEADER);
             CONSOLE_COLOR(ConsoleColor.Green, "===========================================================================================");
         }
 
@@ -98,7 +178,14 @@ namespace CM3D2_DLC_Checker
             }
             catch(FileNotFoundException)
             {
-                CONSOLE_COLOR(ConsoleColor.Red, "CM_NewListDLC.lst file doesn't exist");
+                if (MyDLCListFile == "No")
+                {
+                    CONSOLE_COLOR(ConsoleColor.Red, DLC_LST_FILE + " file doesn't exist");
+                }
+                else
+                {
+                    CONSOLE_COLOR(ConsoleColor.Red, MY_DLC_LST_FILE + " file doesn't exist");
+                }
                 EXIT_PROGRAM();
             }
 
@@ -115,37 +202,70 @@ namespace CM3D2_DLC_Checker
 
         }
 
-        static string GET_CM3D2_INSTALLPATH()
+        static string GET_GAME_INSTALLPATH()
         {
-            // Default: Current Directory of CM3D2_DLC_Checker
-            // Will replaced by CM3D2 InstallPath Registry
-            const string keyName = "HKEY_CURRENT_USER" + "\\" + "SOFTWARE\\KISS\\カスタムメイド3D2";
+            // Default: Current Directory of DLC_Checker
+            // Will be replaced by Registry Entry
+            const string keyName = "HKEY_CURRENT_USER" + "\\" + GAME_REGISTRY;
 
             string GAME_DIRECTORY_REGISTRY = (string)Registry.GetValue(keyName,"InstallPath","");
 
-            if (GAME_DIRECTORY_REGISTRY != null)
+            if (UseCurrentDir == "No")
             {
-                return GAME_DIRECTORY_REGISTRY;
+                if (GAME_DIRECTORY_REGISTRY != null)
+                {
+                    CONSOLE_COLOR(ConsoleColor.Cyan, "Game Dir: " + GAME_DIRECTORY_REGISTRY);
+                    return GAME_DIRECTORY_REGISTRY;
+                }
+                else
+                {
+                    CONSOLE_COLOR(ConsoleColor.Yellow, GAME_NAME + " installation path not set in registry.");
+                    CONSOLE_COLOR(ConsoleColor.Yellow, "Current working directory: " + Directory.GetCurrentDirectory());
+                    return Directory.GetCurrentDirectory();
+                }
             }
             else
             {
-                CONSOLE_COLOR(ConsoleColor.Yellow, "Warning : CM3D2 installation directory is not set in registry. Will using work directory', 'yellow'");
+                CONSOLE_COLOR(ConsoleColor.Yellow, "Current working directory: " + Directory.GetCurrentDirectory());
                 return Directory.GetCurrentDirectory();
             }
         }
 
         static List<string> READ_GAMEDATA()
         {
-            string GAME_DIRECTORY = GET_CM3D2_INSTALLPATH();
+            string GAME_DIRECTORY = GET_GAME_INSTALLPATH();
             string GAMEDATA_DIRECTORY = GAME_DIRECTORY + "\\GameData";
-            
+
             List<string> GAMEDATA_LIST = new List<string>();
+
+            try
+            {
+                GAMEDATA_LIST.AddRange(Directory.GetFiles(@GAMEDATA_DIRECTORY, "*", SearchOption.TopDirectoryOnly).Select(Path.GetFileName));
+            }
+            catch (DirectoryNotFoundException)
+            {
+                CONSOLE_COLOR(ConsoleColor.Red, "GameData Directory doesn't exist, ");
+                CONSOLE_COLOR(ConsoleColor.Red, "invalid Configuration Parameter in " + INI_FILE);
+                CONSOLE_COLOR(ConsoleColor.Red, "Exit Program. ");
+                EXIT_PROGRAM();
+            }
+
+            if (GAME_NAME == "COM3D2" || GAME_NAME == "COM3D2_EN")
+            {
+                string GAMEDATA_20_DIRECTORY = GAME_DIRECTORY + "\\GameData_20";
             
-            GAMEDATA_LIST.AddRange(Directory.GetFiles(@GAMEDATA_DIRECTORY, "*", SearchOption.TopDirectoryOnly).Select(Path.GetFileName));
-            
+                try
+                {
+                    GAMEDATA_LIST.AddRange(Directory.GetFiles(@GAMEDATA_20_DIRECTORY, "*", SearchOption.TopDirectoryOnly).Select(Path.GetFileName));
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    CONSOLE_COLOR(ConsoleColor.Yellow, "GameData_20 Directory doesn't exist, this might be ok with a fresh Installation");
+                    //EXIT_PROGRAM();
+                }                
+            }
             return GAMEDATA_LIST;
         }
-
         static Tuple<List<string>,List<string>> COMPARE_DLC(IDictionary<string, string> DLC_LIST, List<string> GAMEDATA_LIST)
         {
             // DLC LIST = [DLC_FILENAME, DLC_NAME]

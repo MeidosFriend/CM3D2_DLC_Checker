@@ -12,7 +12,12 @@
     <AssemblyName>CM3D2_DLC_Checker</AssemblyName>
     <RootNamespace>CM3D2_DLC_Checker</RootNamespace>
     <Description>Developed on Base of Tankerch's Release</Description>
+    <Version>2.0.0</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="program_old.cs" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.7.0" />
