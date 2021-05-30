@@ -39,6 +39,8 @@ namespace CM3D2_DLC_Checker
             IDictionary<string, string> DLC_LIST = READ_DLC_LIST();
             List<string> GAMEDATA_LIST = READ_GAMEDATA();
 
+            Console.WriteLine(GET_CM3D2_INSTALLPATH());
+
             // DLC LIST SORTED
             // Item 1 = INSTALLED_DLC
             // Item 2 = NOT_INSTALLED_DLC
