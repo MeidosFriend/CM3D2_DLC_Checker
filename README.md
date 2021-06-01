@@ -1,4 +1,4 @@
-# CM3D2 DLC Checker V2.0
+# CM3D2 DLC Checker V2.5
 
 ![](Screen_1.jpg)
 App that checking which one DLC have been installed and not.
