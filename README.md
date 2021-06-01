@@ -16,7 +16,7 @@ Obviously the current directory does not contain a valid game, so the program ca
 - delete the ini file, to get default settings back
 
 ## Release Description
-A rebuild of tankerch's Python Release, now complete migrated in c#.
+A rebuild of tankerch's Python Release, now complete rewritten in c#.
 same core as my other build, com3d2_en_dlcchecker
 list of dlcs up2date
 
