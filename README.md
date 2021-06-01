@@ -40,11 +40,11 @@ The ini file supports several runtime-parameter:
 ** CM3D2_DLC_Checker.ini ** 
 
 [GameDirectory]
--UseCurrentDir=No
+- UseCurrentDir=No
 
 [DLCListFile]
--UpdateListFile=Yes
--MyDLCListFile=No
+- UpdateListFile=Yes
+- MyDLCListFile=No
 
 ---------
 UseCurrentDir
