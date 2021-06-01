@@ -11,8 +11,9 @@ Listfile update disabled
 This screen reflects the choice of a custom listfile
 
 ![](Screen_4.jpg)
-Obviously the current directory does not contain a game, so the program cannot do anything
-if you have a game installed, simply delete the ini file
+Obviously the current directory does not contain a valid game, so the program cannot do anything.
+- make sure you use the correct DLC Checker for your game
+- delete the ini file, to get default settings back
 
 ## Release Description
 A rebuild of tankerch's Python Release, now complete migrated in c#.
