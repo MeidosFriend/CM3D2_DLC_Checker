@@ -48,9 +48,6 @@ MyURL=https://my.url
 UseMyURL=No
 
 ---------
-UseCurrentDir
-- If set to "No" The game directory is read from the registry (only valid when game is installed) (Default)
-- "Yes" means the current directory is used (only valid if current dir is a game dir)
 
 UpdateListFile
 - If set to "Yes", the actual file CM_NewListDLC.lst is downloaded from Internet, overwriting current file! (Default)
