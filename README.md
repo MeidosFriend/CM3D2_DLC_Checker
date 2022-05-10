@@ -1,4 +1,4 @@
-# CM3D2 DLC Checker V2.6
+# CM3D2 DLC Checker V2.7
 
 ![](Screen_1.jpg)
 App that checking which one DLC have been installed and not.
@@ -38,9 +38,6 @@ If no ini-file exists, it will be created
 The ini file supports several runtime-parameter:
 
 ** CM3D2_DLC_Checker.ini ** 
-
-[GameDirectory]
-- UseCurrentDir=No
 
 [DLCListFile]
 - UpdateListFile=Yes
