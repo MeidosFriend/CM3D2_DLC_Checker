@@ -11,8 +11,8 @@
     <StartupObject></StartupObject>
     <AssemblyName>CM3D2_DLC_Checker</AssemblyName>
     <RootNamespace>CM3D2_DLC_Checker</RootNamespace>
-    <Description>Developed on Base of Tankerch's Release</Description>
-    <Version>2.6.0</Version>
+    <Description>Helps to find missing dlc</Description>
+    <Version>2.7.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
